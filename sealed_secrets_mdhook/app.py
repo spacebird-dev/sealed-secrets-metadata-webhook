@@ -37,7 +37,8 @@ async def mutate(request: Request):
     except JSONDecodeError:
         raise HTTPException(status_code=400, detail="Invalid JSON Payload")
     except KeyError:
-        raise HTTPException(status_code=400, detail="Malformed AdmissionReview")
+        raise HTTPException(
+            status_code=400, detail="Malformed AdmissionReview")
 
     if (
         "spec" not in resource
