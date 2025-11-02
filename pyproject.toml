@@ -1,0 +1,19 @@
+[project]
+name = "sealed-secrets-mdhook"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.120.4",
+    "json-logging>=1.5.1",
+    "jsonpatch>=1.33",
+    "kubernetes>=34.1.0",
+    "uvicorn>=0.38.0",
+]
+
+[dependency-groups]
+dev = ["httpx>=0.28.1", "pytest>=8.4.2", "ruff>=0.14.3"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

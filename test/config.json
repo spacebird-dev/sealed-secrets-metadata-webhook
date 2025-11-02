@@ -1,0 +1,8 @@
+{
+    "annotations": {
+        "webhook-annotation": "test"
+    },
+    "labels": {
+        "webhook-label": "test"
+    }
+}
