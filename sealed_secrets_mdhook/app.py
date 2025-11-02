@@ -58,6 +58,8 @@ async def mutate(request: Request):
     patch = JsonPatch.from_diff(resource, resource_mut)
     return JSONResponse(
         {
+            "apiVersion": "admission.k8s.io/v1",
+            "kind": "AdmissionReview",
             "response": {
                 "allowed": True,
                 "uid": uid,

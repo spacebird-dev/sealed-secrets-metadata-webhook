@@ -35,7 +35,11 @@ BASE_REQUEST = {
 }
 
 
-def check_response(expected_patch: list[dict[str, Any]], response: dict[str, Any]):
+def check_response(expected_patch: list[dict[str, Any]], resp_raw: dict[str, Any]):
+    assert resp_raw["apiVersion"] == "admission.k8s.io/v1"
+    assert resp_raw["kind"] == "AdmissionReview"
+    assert resp_raw["response"]
+    response = resp_raw["response"]
     assert response["allowed"]
     assert response["uid"] == REQ_UID
     assert response["patchType"] == "JSONPatch"
@@ -66,7 +70,7 @@ def test_fully_add():
     ]
     resp = client.post("/mutate", json=deepcopy(BASE_REQUEST))
     assert resp.status_code == HTTPStatus.OK
-    check_response(expected_patch, resp.json()["response"])
+    check_response(expected_patch, resp.json())
 
 
 def test_fully_replace():
@@ -91,7 +95,7 @@ def test_fully_replace():
     ]
     resp = client.post("/mutate", json=req)
     assert resp.status_code == HTTPStatus.OK
-    check_response(expected_patch, resp.json()["response"])
+    check_response(expected_patch, resp.json())
 
 
 def test_add_and_replace():
@@ -113,7 +117,7 @@ def test_add_and_replace():
     ]
     resp = client.post("/mutate", json=req)
     assert resp.status_code == HTTPStatus.OK
-    check_response(expected_patch, resp.json()["response"])
+    check_response(expected_patch, resp.json())
 
 
 def test_partially_replace():
@@ -133,7 +137,7 @@ def test_partially_replace():
     ]
     resp = client.post("/mutate", json=req)
     assert resp.status_code == HTTPStatus.OK
-    check_response(expected_patch, resp.json()["response"])
+    check_response(expected_patch, resp.json())
 
 
 def test_no_unneeded_changes():
@@ -147,7 +151,7 @@ def test_no_unneeded_changes():
     expected_patch = []
     resp = client.post("/mutate", json=req)
     assert resp.status_code == HTTPStatus.OK
-    check_response(expected_patch, resp.json()["response"])
+    check_response(expected_patch, resp.json())
 
 
 def test_preserve_existing_metadata():
@@ -172,4 +176,4 @@ def test_preserve_existing_metadata():
     ]
     resp = client.post("/mutate", json=req)
     assert resp.status_code == HTTPStatus.OK
-    check_response(expected_patch, resp.json()["response"])
+    check_response(expected_patch, resp.json())
