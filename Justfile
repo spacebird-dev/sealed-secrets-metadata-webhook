@@ -10,7 +10,7 @@ format:
     uv run ruff format
 
 test:
-    uv run python3 -m ptyest
+    uv run pytest
 
 docker tag:
     docker buildx build --tag {{ tag }} .
