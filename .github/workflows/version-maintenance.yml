@@ -39,7 +39,7 @@ jobs:
                   RESOLVED_VERSION: ${{ env.RESOLVED_VERSION }}
 
             - name: Open PR for release
-              uses: peter-evans/create-pull-request@v7
+              uses: peter-evans/create-pull-request@v8
               with:
                   base: main
                   add-paths: |
